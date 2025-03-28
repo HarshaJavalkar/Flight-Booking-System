@@ -7,12 +7,19 @@ const asyncHandler = require("express-async-handler");
 const logger = require("../logger/logger");
 
 const fs = require("fs");
-const privateKey = fs.readFileSync("private.pem", "utf8");
 
 const { error } = require("winston");
 const register = asyncHandler(async (req, res) => {
-  const { email, password, googleId, name, photo, isGoogleLogin } = req.body;
-  const hashedPassword = isGoogleLogin
+  const {
+    email,
+    password,
+    googleId = "",
+    name,
+    photo = "",
+    isGoogleLogin = false,
+    role = "user",
+  } = req.body;
+    const hashedPassword = isGoogleLogin
     ? password
     : await bcrypt.hash(password, 10);
 
@@ -23,13 +30,12 @@ const register = asyncHandler(async (req, res) => {
       name,
       photo,
       googleId,
+      role
     });
-    await newUser.save();
+    console.log("newUser", newUser);
+    // await newUser.save();
     logger.info(`User ${email} registered successfully`);
-    // res.json({
-    //   message: "User registered successfully",
-    //   code: 200,
-    // });
+    
     login(req, res);
   } catch (err) {
     if (err.code === 11000) {
@@ -41,7 +47,15 @@ const register = asyncHandler(async (req, res) => {
   }
 });
 const login = async (req, res) => {
-  const { email, name, photo, password, isGoogleLogin } = req.body;
+  const {
+    email,
+    password,
+    googleId = "",
+    name,
+    photo = "",
+    isGoogleLogin = false,
+    role = "user",
+  } = req.body;
   logger.info(`🔹 Login attempt for user: ${email}`);
 
   if (!isGoogleLogin) {
@@ -59,7 +73,7 @@ const login = async (req, res) => {
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
-      const token = jwt.sign({ id: user.email }, privateKey, {
+      const token = jwt.sign({ id: user.email }, process.env.jwt_ENCRYPT_KEY, {
         expiresIn: "1h",
       });
       logger.info(`✅ User '${email}' logged in successfully`);

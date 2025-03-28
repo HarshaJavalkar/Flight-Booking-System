@@ -13,7 +13,8 @@ const {
 router.post(
   "/register",
   authLimit,
-  asyncHandler((req, res) => register(req, res))
+  asyncHandler((req, res) => {    
+    return register(req, res)})
 );
 router.get(
   "/login-with-google",
@@ -39,8 +40,6 @@ router.post(
 
 router.post("/update", authenticate, updateUserProfile);
 router.stack.forEach((route) => {
-  console.log("harsha");
-
   if (route.route) {
     console.log("Hello ", route.route.path);
   }
