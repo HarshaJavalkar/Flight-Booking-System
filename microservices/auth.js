@@ -6,9 +6,11 @@ const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const logger = require("../logger/logger");
 
+const fs = require("fs");
+const privateKey = fs.readFileSync("private.pem", "utf8");
+
 const { error } = require("winston");
 const register = asyncHandler(async (req, res) => {
-  console.log("Data received");
   const { email, password, googleId, name, photo, isGoogleLogin } = req.body;
   const hashedPassword = isGoogleLogin
     ? password
@@ -57,13 +59,9 @@ const login = async (req, res) => {
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
-      const token = jwt.sign(
-        { id: user.email },
-        process.env.GITHUB_JWT_SECRET,
-        {
-          expiresIn: "1h",
-        }
-      );
+      const token = jwt.sign({ id: user.email }, privateKey, {
+        expiresIn: "1h",
+      });
       logger.info(`✅ User '${email}' logged in successfully`);
       res.json({ token });
     } catch (err) {
@@ -73,7 +71,7 @@ const login = async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
   }
-  const token = jwt.sign({ id: email }, process.env.GITHUB_JWT_SECRET, {
+  const token = jwt.sign({ id: email }, privateKey, {
     expiresIn: "1h",
   });
   logger.info(`✅ User '${email}' logged in successfully`);
@@ -84,12 +82,17 @@ const authenticate = (req, res, next) => {
   const token = req.header("Authorization");
   if (!token) return res.status(401).json({ error: "Access Denied" });
   try {
-    const verified = jwt.verify(token, process.env.GITHUB_JWT_SECRET);
+    const verified = jwt.verify(token, publicKey);
     req.user = verified;
     next();
-  } catch {
-    res.status(400).json({ error: "Invalid Token" });
+  } catch (err) {
+    if (err.name === "TokenExpiredError") {
+      return res
+        .status(401)
+        .json({ error: "Session Expired. Please log in again." });
+    }
+    return res.status(403).json({ error: "Invalid Token" });
   }
 };
 
-module.exports = { register, login };
+module.exports = { register, login, authenticate };

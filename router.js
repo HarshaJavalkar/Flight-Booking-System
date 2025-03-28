@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { register, login } = require("./microservices/auth");
+const { register, login, authenticate } = require("./microservices/auth");
 const { loginWithGoogle, callBack } = require("./microservices/googleAuth.js");
 const asyncHandler = require("express-async-handler");
 const authLimit = require("./rate-limit");
+const { updateUserProfile } = require("./microservices/userService.js");
 const app = express();
+const {
+  homeLoanEligibility,
+} = require("./microservices/home-loan-eligibility.js");
 
 router.post(
   "/register",
@@ -26,6 +30,14 @@ router.post(
   authLimit,
   asyncHandler((req, res) => login(req, res))
 );
+
+router.post(
+  "/home-loan-eligibility",
+  authLimit,
+  asyncHandler((req, res) => homeLoanEligibility(req, res))
+);
+
+router.post("/update", authenticate, updateUserProfile);
 router.stack.forEach((route) => {
   console.log("harsha");
 
