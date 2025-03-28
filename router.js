@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { register, login } = require("./microservices/auth");
+const { register, login } = require("./Services/auth");
 const asyncHandler = require("express-async-handler");
 console.log("Router initialized");
 

@@ -1,6 +1,9 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+
 const mongoose = require("mongoose");
 require("dotenv").config();
+
 
 const app = express();
 app.use(express.json());
@@ -10,6 +13,7 @@ mongoose.connect(process.env.DBURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
+app.use(bodyParser.json());
 
 const db = mongoose.connection;
 db.on("error", () => console.log("Error in DB connection"));
