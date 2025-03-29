@@ -4,9 +4,9 @@ const { nanoid } = require("nanoid");
 const validator = require("validator");
 
 const UserSchema = new mongoose.Schema({
+  role: { type: String, default: () => "user" },
   userId: { type: String, unique: true, default: () => nanoid(10) },
   password: { type: String, required: true },
-  googleId: { type: String, required: true, unique: true },
   email: {
     type: String,
     required: true,
@@ -30,9 +30,9 @@ const UserSchema = new mongoose.Schema({
     },
   },
   name: { type: String, required: true },
-  photo: { type: String, required: true }, // Store photo URL
+  photo: { type: String }, // Store photo URL
 });
 
-const User = mongoose.model("UserData", UserSchema);
+const User = mongoose.model("UserData", UserSchema, "users");
 
 module.exports = User;

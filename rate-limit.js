@@ -1,13 +1,25 @@
 const rateLimit = require("express-rate-limit");
 const config = require("./config/config");
+
+const env = process.env.env || "dev";
 const authLimit = rateLimit({
-  windowMs: config[process.env.env].rateLimiter.rateLimitTimer,
-  statusCode: config[process.env.env].rateLimiter.rateLimitErrorCode,
-  max: 5,
+  windowMs: config[env].rateLimiter.rateLimitTimer,
+  statusCode: config[env].rateLimiter.rateLimitErrorCode,
+  max: config[env].rateLimiter.maxRequests,
   message: {
-    error: config[process.env.env].rateLimiter.rateLimitErrorMessage,
-    code: config[process.env.env].rateLimiter.rateLimitErrorProto,
+    error: config[env].rateLimiter.rateLimitErrorMessage,
+    code: config[env].rateLimiter.rateLimitErrorProto,
   },
 });
 
-module.exports = authLimit;
+const flightLimit = rateLimit({
+  windowMs: config[env].flightRateLimiter.rateLimitTimer,
+  statusCode: config[env].flightRateLimiter.rateLimitErrorCode,
+  max: config[env].flightRateLimiter.maxRequests,
+  message: {
+    error: config[env].flightRateLimiter.rateLimitErrorMessage,
+    code: config[env].flightRateLimiter.rateLimitErrorProto,
+  },
+});
+
+module.exports = { authLimit, flightLimit };
