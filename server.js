@@ -17,12 +17,12 @@ mongoose.connect(process.env.DBURL, {
 const logger = require("./logger/logger");
 logger.info("🔹 Winston logger initialized");
 morgan.token("username", (req) => {
-  return req.body?.username || req.user?.username || "anonymous"; // Handle different cases
+  return req.body?.email || req.user?.email || "anonymous"; // Handle different cases
 });
 
 const customFormat = (tokens, req, res) => {
   const logObject = {
-    username: req.user ? req.user.username : "Anonymous", // Handle missing user
+    email: req.email ? req.user.email : "Anonymous", // Handle missing user
     timestamp: tokens.date(req, res, "iso"),
     method: tokens.method(req, res),
     url: tokens.url(req, res),
@@ -67,6 +67,7 @@ app.use(
 const db = mongoose.connection;
 db.on("error", () => console.log("Error in DB connection"));
 db.once("open", () => console.log("DB connected"));
+
 app.use(cors());
 app.use(
   cors({
@@ -75,7 +76,7 @@ app.use(
 );
 // Use Router
 console.log("Registering routes...");
-const router = require("./router");
+const { router } = require("./router");
 
 app.use("/", router);
 

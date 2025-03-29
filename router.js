@@ -1,20 +1,40 @@
 const express = require("express");
 const router = express.Router();
-const { register, login, authenticate } = require("./microservices/auth");
-const { loginWithGoogle, callBack } = require("./microservices/googleAuth.js");
 const asyncHandler = require("express-async-handler");
-const authLimit = require("./rate-limit");
-const { updateUserProfile } = require("./microservices/userService.js");
-const app = express();
+const { authLimit, flightLimit } = require("./rate-limit");
+
+const { register, login } = require("./microservices/auth");
+const { loginWithGoogle, callBack } = require("./microservices/googleAuth.js");
 const {
-  homeLoanEligibility,
-} = require("./microservices/home-loan-eligibility.js");
+  bookFlight,
+} = require("./microservices/flight-booking-system/book_flight_ticket.js");
+const {
+  viewFlightTicket,
+} = require("./microservices/flight-booking-system/view_flight_ticket.js");
+
+const {
+  createFlight,
+} = require("./microservices/flight-booking-system/create_a_flight.js");
+
+const {
+  validateBookingRequest,
+} = require("./middlewares/validatebookingDetails.js");
+const {
+  checkSeatAvailability,
+} = require("./middlewares/checkSeatAvailability.js");
+
+const {
+  authenticate,
+  adminMiddleware,
+  userMiddleware,
+} = require("./middlewares/authenticate.js");
 
 router.post(
   "/register",
   authLimit,
-  asyncHandler((req, res) => {    
-    return register(req, res)})
+  asyncHandler((req, res) => {
+    return register(req, res);
+  })
 );
 router.get(
   "/login-with-google",
@@ -33,15 +53,27 @@ router.post(
 );
 
 router.post(
-  "/home-loan-eligibility",
-  authLimit,
-  asyncHandler((req, res) => homeLoanEligibility(req, res))
+  "/create-a-flight",
+  flightLimit,
+  authenticate,
+  adminMiddleware,
+  createFlight
+);
+router.post(
+  "/book-flight",
+  flightLimit,
+  userMiddleware,
+  authenticate,
+  validateBookingRequest,
+  checkSeatAvailability,
+  bookFlight
 );
 
-router.post("/update", authenticate, updateUserProfile);
+router.get("/view-flight-ticket", flightLimit, authenticate, viewFlightTicket);
+// router.post("/update", authenticate, updateUserProfile);
 router.stack.forEach((route) => {
   if (route.route) {
-    console.log("Hello ", route.route.path);
+    console.log("route ", route.route.path);
   }
 });
-module.exports = router;
+module.exports = { router };

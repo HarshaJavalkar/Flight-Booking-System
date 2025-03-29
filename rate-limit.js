@@ -1,15 +1,25 @@
 const rateLimit = require("express-rate-limit");
 const config = require("./config/config");
-console.log("Javalkar",config[process.env.env].rateLimiter)
-const env = process.env.env ||  'dev';
+
+const env = process.env.env || "dev";
 const authLimit = rateLimit({
   windowMs: config[env].rateLimiter.rateLimitTimer,
   statusCode: config[env].rateLimiter.rateLimitErrorCode,
-  max: 5,
+  max: config[env].rateLimiter.maxRequests,
   message: {
     error: config[env].rateLimiter.rateLimitErrorMessage,
     code: config[env].rateLimiter.rateLimitErrorProto,
   },
 });
 
-module.exports = authLimit;
+const flightLimit = rateLimit({
+  windowMs: config[env].flightRateLimiter.rateLimitTimer,
+  statusCode: config[env].flightRateLimiter.rateLimitErrorCode,
+  max: config[env].flightRateLimiter.maxRequests,
+  message: {
+    error: config[env].flightRateLimiter.rateLimitErrorMessage,
+    code: config[env].flightRateLimiter.rateLimitErrorProto,
+  },
+});
+
+module.exports = { authLimit, flightLimit };
