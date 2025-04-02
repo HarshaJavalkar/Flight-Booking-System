@@ -6,8 +6,6 @@ const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const logger = require("../logger/logger");
 
-const fs = require("fs");
-
 const { error } = require("winston");
 const register = asyncHandler(async (req, res) => {
   const {
@@ -83,12 +81,13 @@ const login = async (req, res) => {
         logger.warn(`⚠️ Login failed: Incorrect password for user '${email}'`);
         return res.status(401).json({ error: "Invalid credentials" });
       }
-
-      const token = jwt.sign(
-        { email: user.email },
-        process.env.jwt_ENCRYPT_KEY,
-        { expiresIn: "1h" }
-      );
+      const jwtSecret =
+        role === "user"
+          ? process.env.user_jwt_ENCRYPT_KEY
+          : process.env.admin_jwt_ENCRYPT_KEY;
+      const token = jwt.sign({ email: user.email }, jwtSecret, {
+        expiresIn: "1h",
+      });
 
       logger.info(`✅ User '${email}' logged in successfully`);
       return res.json({ token });
@@ -99,9 +98,12 @@ const login = async (req, res) => {
       return res.status(500).json({ error: "Internal server error" });
     }
   }
-
+  const jwtSecret =
+    role === "user"
+      ? process.env.user_jwt_ENCRYPT_KEY
+      : process.env.admin_jwt_ENCRYPT_KEY;
   // Google login case
-  const token = jwt.sign({ email: user.email }, process.env.jwt_ENCRYPT_KEY, {
+  const token = jwt.sign({ email: user.email }, jwtSecret, {
     expiresIn: "1h",
   });
 

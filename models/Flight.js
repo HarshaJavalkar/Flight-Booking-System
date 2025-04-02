@@ -18,16 +18,26 @@ const FlightSchema = new mongoose.Schema({
   terminal: { type: String },
   price: { type: Number, required: true },
   seats: {
-    totalSeats: { type: Number, required: true }, // Total seats in flight
-    availableSeats: { type: Number, required: true }, // Overall available seats
+    totalSeats: { type: Number, required: true },
+    availableSeats: { type: Number, required: true },
     seatMap: {
       business: {
-        total: { type: Number, default: 0 }, // Total business seats
-        available: { type: Number, default: 0 }, // Available business seats
+        total: { type: Number, default: 0 },
+        available: { type: Number, default: 0 },
+        cancelledSeats: {
+          type: [String],
+          required: true,
+          default: [],
+        },
       },
       economy: {
-        total: { type: Number, default: 0 }, // Total economy seats
-        available: { type: Number, default: 0 }, // Available economy seats
+        total: { type: Number, default: 0 },
+        available: { type: Number, default: 0 },
+        cancelledSeats: {
+          type: [String],
+          required: true,
+          default: [],
+        },
       },
     },
   },
