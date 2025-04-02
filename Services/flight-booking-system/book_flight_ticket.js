@@ -1,7 +1,8 @@
 const asyncHandler = require("express-async-handler");
-const Flight = require("../../models/Flight");
 const Booking = require("../../models/Booking");
 const logger = require("../../logger/logger");
+
+const client = require('../../redisClient');
 
 const generateBookingNo = (kind = "passenger") => {
   return (
@@ -87,6 +88,10 @@ const bookFlight = asyncHandler(async (req, res) => {
       flight.seats.seatMap[seatType].available,
     flight.seats.seatMap[seatType].cancelledSeats
   );
+  if (assignedTickets.error) {
+    logger.error(`Not enough seats: ${assignedTickets.error}`);
+    return res.status(400).json({ error: assignedTickets.error });
+  }
   logger.info("Assigned tickets:", { assignedTickets });
 
   const newBookingRequest = new Booking({
