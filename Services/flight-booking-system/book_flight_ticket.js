@@ -111,6 +111,9 @@ const bookFlight = asyncHandler(async (req, res) => {
     availableSeats: flight.seats.availableSeats,
     seatTypeAvailability: flight.seats.seatMap[seatType].available,
   });
+  const cacheKey = `passengers:${flightNumber}`;
+  await client.del(cacheKey);
+  logger.info(`🗑 Redis cache cleared for flight ${flightNumber}`);
 
   res.status(201).json({
     message: "Flight booked successfully",
