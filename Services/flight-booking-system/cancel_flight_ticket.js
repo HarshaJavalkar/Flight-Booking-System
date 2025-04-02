@@ -4,14 +4,16 @@ const Flight = require("../../models/Flight");
 const cancelFlightTicket = asyncHandler(async (req, res) => {
   const { flightNumber, email, bookingNo } = req.body;
 
-  // Step 1: Find the booking
   const booking = await Booking.findOne({ email, flightNumber, bookingNo });
 
   if (!booking) {
     return res.status(404).json({ message: "Booking not found." });
   }
 
-  // Step 2: Mark as cancelled
+  if(booking.status==='cancelled'){
+    return res.status(400).json({ message: "already cancelled" });
+  }
+  
   booking.status = "cancelled";
   await booking.save();
 
@@ -24,8 +26,7 @@ const cancelFlightTicket = asyncHandler(async (req, res) => {
 
   // Step 4: Get the passengers & seat type
   const { passengers } = booking;
-  const seatType = booking.seatType; // e.g., 'business' or 'economy'
-  const cancelledSeats = [passengers.map(passenger.seatNumber)];
+  const seatType = booking.seatType; 
   // Step 5: Increase available seats
   flight.seats.availableSeats += passengers.length;
   flight.seats.seatMap[seatType].available += passengers.length;
@@ -37,8 +38,6 @@ const cancelFlightTicket = asyncHandler(async (req, res) => {
     if (!flight.seats.seatMap[seatType].cancelledSeats) {
       flight.seats.seatMap[seatType].cancelledSeats = [];
     }
-
-    // Add the cancelled seat to the vacant list
     flight.seats.seatMap[seatType].cancelledSeats.push(seatNumber);
   });
 

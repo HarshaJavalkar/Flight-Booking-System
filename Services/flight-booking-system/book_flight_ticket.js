@@ -3,6 +3,12 @@ const Flight = require("../../models/Flight");
 const Booking = require("../../models/Booking");
 const logger = require("../../logger/logger");
 
+const generateBookingNo = (kind = "passenger") => {
+  return (
+    (kind === "booking" ? "BK" : "PN") +
+    Math.random().toString(36).substr(2, 8).toUpperCase()
+  );
+};
 const assignTickets = (
   passengers,
   availableSeats,
@@ -14,10 +20,13 @@ const assignTickets = (
   if (passengers.length > availableSeats) {
     return { error: "Not enough available seats" };
   }
-
   let row = Math.floor(currentPassengersCount / 4) + 1;
   let seatIndex = currentPassengersCount % 4;
-  let assignedSeats = new Set(); // Track assigned seats
+  let assignedSeats = new Set(); 
+  logger.info("passengers "+ JSON.stringify(passengers) +" availableSeats "+ 
+    availableSeats + "CurrentPassengersCunt"+
+    currentPassengersCount + "cancelledSeats" +
+    JSON.stringify(cancelledSeats));
 
   // Assign normal sequential seats first
   let regularPassengers = passengers.slice(
@@ -38,6 +47,7 @@ const assignTickets = (
     }
 
     passenger.seatNumber = `${row}${seatsInEachRow[seatIndex++]}`;
+    passenger.passengerNumber=generateBookingNo()
     assignedSeats.add(passenger.seatNumber);
 
     if (seatIndex === seatsInEachRow.length) {
@@ -48,19 +58,14 @@ const assignTickets = (
 
   // Assign cancelled seats last
   cancelledPassengers.forEach((passenger, index) => {
-    passenger.passengerNumber = generatebookingNo();
+    passenger.passengerNumber = generateBookingNo();
     passenger.seatNumber = cancelledSeats[index];
   });
 
   return [...regularPassengers, ...cancelledPassengers];
 };
 
-const generateBookingNo = (kind = "passenger") => {
-  return (
-    (kind === "booking" ? "BK" : "PN") +
-    Math.random().toString(36).substr(2, 8).toUpperCase()
-  );
-};
+
 
 const bookFlight = asyncHandler(async (req, res) => {
   logger.info("Incoming booking request:", { body: req.body });
@@ -90,14 +95,17 @@ const bookFlight = asyncHandler(async (req, res) => {
     flightNumber: flight.flightNumber,
     passengers: assignedTickets,
     status: "confirmed",
-    bookingNo: generatebookingNo("booking"),
+    bookingNo: generateBookingNo("booking"),
   });
+
 
   await newBookingRequest.save();
   logger.info("New booking saved:", { booking: newBookingRequest });
 
   flight.seats.availableSeats -= passengers.length;
   flight.seats.seatMap[seatType].available -= passengers.length;
+  const passengerSeats = assignedTickets.map(p => p.seatNumber); 
+  flight.seats.seatMap[seatType].cancelledSeats = flight.seats.seatMap[seatType].cancelledSeats.filter(seat => !passengerSeats.includes(seat));
   await flight.save();
   logger.info("Updated flight seat availability:", {
     availableSeats: flight.seats.availableSeats,

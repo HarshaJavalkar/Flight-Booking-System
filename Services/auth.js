@@ -68,6 +68,8 @@ const login = async (req, res) => {
   logger.info(`🔹 Login attempt for user: ${email}`);
 
   if (!isGoogleLogin) {
+    logger.info("login using username and password")
+
     try {
       const user = await User.findOne({ email });
 
