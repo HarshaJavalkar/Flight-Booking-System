@@ -1,0 +1,1154 @@
+{
+	"info": {
+		"_postman_id": "0d9894d4-ae64-4943-9d6f-1ebd3c81dfd0",
+		"name": "flight booking system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20847091"
+	},
+	"item": [
+		{
+			"name": "register-user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"harsha@123.com\",\r\n    \"password\":\"Harsha!@123\",\r\n    \"name\": \"Harsha2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login user get token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"harsha@123.com\",\r\n    \"password\":\"Harsha!@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "login failed",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"harsha@123.com\",\r\n    \"password\":\"Harsha!@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "10"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "9"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 19:11:02 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1743275464"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "31"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1f-mRYQ6Yx/raK/ssDeWseqQCiH0yM\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Invalid credentials\"\n}"
+				},
+				{
+					"name": "success response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"harsha@123.com\",\r\n    \"password\":\"Harsha!@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "10"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "9"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 19:47:39 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1743277661"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "173"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"ad-ghXHBjuVZUF5wm6Twdw8bP1wEAc\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoYUAxMjMuY29tIiwiaWF0IjoxNzQzMjc3NjU5LCJleHAiOjE3NDMyODEyNTl9.DHPw32qsuxTk7S3EteEDk1_k5N9aQf3O8got1x95rYA\"\n}"
+				}
+			]
+		},
+		{
+			"name": "register-admin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"Harsha!@123\",\r\n    \"name\": \"Harsha2\",\r\n    \"role\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login admin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"Harsha!@123\",\r\n    \"name\": \"Harsha2\",\r\n    \"role\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-flight only admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluM0BnbWFpbC5jb20iLCJpYXQiOjE3NDMyMzA0MTYsImV4cCI6MTc0MzIzNDAxNn0.hCCnS8qBKjAfRfz2U8b0LJgKu9QM7hTHt0YdtM-sE-A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"flightNumber\": \"SG456\",\r\n  \"airline\": \"SpiceJet\",\r\n  \"origin\": \"Bengaluru\",\r\n  \"destination\": \"Hyderabad\",\r\n  \"departureTime\": \"2025-04-02T09:15:00Z\",\r\n  \"arrivalTime\": \"2025-04-02T11:00:00Z\",\r\n  \"duration\": 105,\r\n  \"status\": \"Scheduled\",\r\n  \"aircraft\": \"Airbus A320\",\r\n  \"gate\": \"B2\",\r\n  \"terminal\": \"T1\",\r\n  \"price\": 4500,\r\n  \"seats\": {\r\n    \"totalSeats\": 200,\r\n    \"availableSeats\": 5,\r\n    \"seatMap\": {\r\n      \"business\": {\r\n        \"total\": 12,\r\n        \"available\": 1\r\n      },\r\n      \"economy\": {\r\n        \"total\": 188,\r\n        \"available\": 4\r\n      }\r\n    }\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/create-a-flight",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"create-a-flight"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"flightNumber\": \"SG456\",\r\n  \"airline\": \"SpiceJet\",\r\n  \"origin\": \"Bengaluru\",\r\n  \"destination\": \"Hyderabad\",\r\n  \"departureTime\": \"2025-04-02T09:15:00Z\",\r\n  \"arrivalTime\": \"2025-04-02T11:00:00Z\",\r\n  \"duration\": 105,\r\n  \"status\": \"Scheduled\",\r\n  \"aircraft\": \"Airbus A320\",\r\n  \"gate\": \"B2\",\r\n  \"terminal\": \"T1\",\r\n  \"price\": 4500,\r\n  \"seats\": {\r\n    \"totalSeats\": 200,\r\n    \"availableSeats\": 5,\r\n    \"seatMap\": {\r\n      \"business\": {\r\n        \"total\": 12,\r\n        \"available\": 1\r\n      },\r\n      \"economy\": {\r\n        \"total\": 188,\r\n        \"available\": 4\r\n      }\r\n    }\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/create-a-flight",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"create-a-flight"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "5"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "4"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 07:00:14 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1743231625"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "539"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"21b-26KB+e42DmSZeQTLa1qgSXq1WWs\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Flight schedule created\",\n    \"flight\": {\n        \"flightNumber\": \"SG456\",\n        \"airline\": \"SpiceJet\",\n        \"origin\": \"Bengaluru\",\n        \"destination\": \"Hyderabad\",\n        \"departureTime\": \"2025-04-02T09:15:00.000Z\",\n        \"arrivalTime\": \"2025-04-02T11:00:00.000Z\",\n        \"duration\": 105,\n        \"status\": \"Scheduled\",\n        \"aircraft\": \"Airbus A320\",\n        \"gate\": \"B2\",\n        \"terminal\": \"T1\",\n        \"price\": 4500,\n        \"seats\": {\n            \"totalSeats\": 200,\n            \"availableSeats\": 5,\n            \"seatMap\": {\n                \"business\": {\n                    \"total\": 12,\n                    \"available\": 1\n                },\n                \"economy\": {\n                    \"total\": 188,\n                    \"available\": 4\n                }\n            }\n        },\n        \"_id\": \"67e79a7e5e91ebfcafd8ede6\",\n        \"createdAt\": \"2025-03-29T07:00:14.092Z\",\n        \"__v\": 0\n    }\n}"
+				},
+				{
+					"name": "duplicate flight number",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"flightNumber\": \"SG456\",\r\n  \"airline\": \"SpiceJet\",\r\n  \"origin\": \"Bengaluru\",\r\n  \"destination\": \"Hyderabad\",\r\n  \"departureTime\": \"2025-04-02T09:15:00Z\",\r\n  \"arrivalTime\": \"2025-04-02T11:00:00Z\",\r\n  \"duration\": 105,\r\n  \"status\": \"Scheduled\",\r\n  \"aircraft\": \"Airbus A320\",\r\n  \"gate\": \"B2\",\r\n  \"terminal\": \"T1\",\r\n  \"price\": 4500,\r\n  \"seats\": {\r\n    \"totalSeats\": 200,\r\n    \"availableSeats\": 5,\r\n    \"seatMap\": {\r\n      \"business\": {\r\n        \"total\": 12,\r\n        \"available\": 1\r\n      },\r\n      \"economy\": {\r\n        \"total\": 188,\r\n        \"available\": 4\r\n      }\r\n    }\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/create-a-flight",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"create-a-flight"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "5"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "4"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 07:02:16 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1743231747"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "122"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"7a-hPukhy63ZWosLfDp+oXUwv1DjDw\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"E11000 duplicate key error collection: test.flights index: flightNumber_1 dup key: { flightNumber: \\\"SG456\\\" }\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Book ticket- user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoYUAxMjMuY29tIiwiaWF0IjoxNzQzMzU0NDgyLCJleHAiOjE3NDMzNTgwODJ9.tUxEsn7bSnmYSGLyscfO5glksWJH_xmVIlJq3feh81E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"flightNumber\":  \"AI202\",\r\n    \"role\":\"user\",\r\n    \"seatType\": \"economy\",\r\n    \"passengers\":[\r\n        { \"name\": \"varun\", \"email\": \"varun@gmail.com\" },\r\n        { \"name\": \"sai\", \"email\": \"varun@gmail.com\" },\r\n        { \"name\": \"ben\", \"email\": \"varun@gmail.com\" }\r\n\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/book-flight",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"book-flight"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"flightNumber\":  \"SG456\",\r\n    \"role\":\"user\",\r\n    \"seatType\": \"economy\",\r\n    \"passengers\":[\r\n        { \"name\": \"varun\", \"email\": \"varun@gmail.com\" },\r\n        { \"name\": \"sai\", \"email\": \"varun@gmail.com\" },\r\n        { \"name\": \"ben\", \"email\": \"varun@gmail.com\" }\r\n\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/book-flight",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book-flight"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "10"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "9"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 19:18:43 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1743275925"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "451"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1c3-CA4qhicVRQ6NV07fdxs1uG+KxU0\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Flight booked successfully\",\n    \"booking\": {\n        \"flightNumber\": \"SG456\",\n        \"passengers\": [\n            {\n                \"name\": \"varun\",\n                \"email\": \"varun@gmail.com\",\n                \"seatNumber\": \"49D\",\n                \"_id\": \"67e8479300415d7d6d0dc198\"\n            },\n            {\n                \"name\": \"sai\",\n                \"email\": \"varun@gmail.com\",\n                \"seatNumber\": \"50A\",\n                \"_id\": \"67e8479300415d7d6d0dc199\"\n            },\n            {\n                \"name\": \"ben\",\n                \"email\": \"varun@gmail.com\",\n                \"seatNumber\": \"50B\",\n                \"_id\": \"67e8479300415d7d6d0dc19a\"\n            }\n        ],\n        \"_id\": \"67e8479300415d7d6d0dc197\",\n        \"createdAt\": \"2025-03-29T19:18:43.488Z\",\n        \"__v\": 0\n    }\n}"
+				},
+				{
+					"name": "duplicate booking",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"flightNumber\":  \"SG456\",\r\n    \"role\":\"user\",\r\n    \"seatType\": \"economy\",\r\n    \"passengers\":[\r\n        { \"name\": \"varun\", \"email\": \"varun@gmail.com\" },\r\n        { \"name\": \"sai\", \"email\": \"varun@gmail.com\" },\r\n        { \"name\": \"ben\", \"email\": \"varun@gmail.com\" }\r\n\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/book-flight",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book-flight"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "10"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "9"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 19:44:53 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1743277495"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2e-e6vPsOkgExfbXuLhCf1KOZA4Ngs\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Only 0 seats left in economy class\"\n}"
+				}
+			]
+		},
+		{
+			"name": "view-flight-details user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoYUAxMjMuY29tIiwiaWF0IjoxNzQzNTAwMjQyLCJleHAiOjE3NDM1MDM4NDJ9.11yZCWuQYsY6JQHDUkIhBRtB8d3SlZDHrcwe8N-Ppxo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "bookingNo",
+						"value": "BKFUNNM0UP",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/view-flight-ticket",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"view-flight-ticket"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "invalid token",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/view-flight-ticket",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"view-flight-ticket"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "10"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "9"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 20:04:32 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1743278674"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "45"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2d-X4Kp3DqwnfMf2IOLJ+gBL2X7Jw8\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Unauthorized: No token provided\"\n}"
+				},
+				{
+					"name": "success ticket details",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/view-flight-ticket",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"view-flight-ticket"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "10"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "9"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 29 Mar 2025 20:06:36 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1743278798"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "443"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1bb-fE4xGEv+h50cLt+IbF3WNjkql4c\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"ticketDetails\": {\n        \"_id\": \"67e84d8f28038b2a477a62ac\",\n        \"email\": \"harsha@123.com\",\n        \"flightNumber\": \"AI202\",\n        \"passengers\": [\n            {\n                \"name\": \"varun\",\n                \"email\": \"varun@gmail.com\",\n                \"seatNumber\": \"37B\",\n                \"_id\": \"67e84d8f28038b2a477a62ad\"\n            },\n            {\n                \"name\": \"sai\",\n                \"email\": \"varun@gmail.com\",\n                \"seatNumber\": \"37C\",\n                \"_id\": \"67e84d8f28038b2a477a62ae\"\n            },\n            {\n                \"name\": \"ben\",\n                \"email\": \"varun@gmail.com\",\n                \"seatNumber\": \"37D\",\n                \"_id\": \"67e84d8f28038b2a477a62af\"\n            }\n        ],\n        \"createdAt\": \"2025-03-29T19:44:15.867Z\",\n        \"__v\": 0\n    }\n}"
+				},
+				{
+					"name": "view-flight-details",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/view-flight-ticket",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"view-flight-ticket"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "10"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "9"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 30 Mar 2025 15:30:43 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1743348645"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "62"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3e-NNygjYp4Xzl8WEWK/teAcE+0xbI\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"No bookings found for the email ID admin@gmail.com\"\n}"
+				}
+			]
+		},
+		{
+			"name": "cancel-flight-ticket",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcnNoYUAxMjMuY29tIiwiaWF0IjoxNzQzMzQzNDQ3LCJleHAiOjE3NDMzNDcwNDd9.levoxFVZnzmTBgIcr2Mv0nNq-tqmh4Hh7aIT-ZmTRXY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "flightNumber",
+						"value": "SG456",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"flightNumber\": \"AI202\",\r\n        \"role\": \"user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cancel-flight-ticket",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cancel-flight-ticket"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "localhost:8080/cancel-flight-ticket",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "flightNumber",
+								"value": "SG456",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"flightNumber\": \"SG456\",\r\n        \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/cancel-flight-ticket",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cancel-flight-ticket"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "10"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "9"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 30 Mar 2025 14:04:20 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1743343462"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"33-nBiAe7l/KdB6Ddtck9Hw97JLtq4\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Flight ticket cancelled successfully.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "view-all-passengers admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTc0MzM0NzEzNiwiZXhwIjoxNzQzMzUwNzM2fQ.6SaNA8wjzpjaz_0WVUlPk2p34d849GGb0sefV20R-4o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"role\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/view-all-passengers",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"view-all-passengers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modify seat assingment",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"flightNumber\":\"\",\r\n    \"passengerId\": \"\",\r\n    \"newSeatNumber\": \"1A\",\r\n    \"seatType\":\"economy\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/modify-seat",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"modify-seat"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
