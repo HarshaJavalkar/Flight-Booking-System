@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
 const mailChecker = require("mailchecker");
-const { nanoid } = require("nanoid");
 const validator = require("validator");
 
 const UserSchema = new mongoose.Schema({
   role: { type: String, default: () => "user" },
-  userId: { type: String, unique: true, default: () => nanoid(10) },
   password: { type: String, required: true },
   email: {
     type: String,

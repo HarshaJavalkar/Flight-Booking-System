@@ -43,6 +43,10 @@ const cancelFlightTicket = asyncHandler(async (req, res) => {
 
   await flight.save();
 
+  const cacheKey = `passengers:${flightNumber}`;
+  await client.del(cacheKey);
+  logger.info(`🗑 Redis cache cleared for flight ${flightNumber}`);
+
   return res.status(200).json({
     message: "Flight ticket cancelled successfully.",
     availableSeats: flight.seats.availableSeats,

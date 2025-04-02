@@ -79,7 +79,10 @@ const modifySeatAssignment = async (req, res) => {
     }
     flight.seats.seatMap[seatType].cancelledSeats.push(lastFilledSeat);
     await flight.save();
-
+    const cacheKey = `passengers:${flightNumber}`;
+    await client.del(cacheKey);
+    logger.info(`🗑 Redis cache cleared for flight ${flightNumber}`);
+  
     return res.status(200).json({ success: true, message: "Seat updated successfully.", booking });
 
 };

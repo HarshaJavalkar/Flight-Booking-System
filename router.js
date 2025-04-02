@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const asyncHandler = require("express-async-handler");
 const { authLimit, flightLimit } = require("./rate-limit");
-
+const logger = require("./logger/logger.js")
 const { register, login } = require("./Services/auth");
 const { loginWithGoogle, callBack } = require("./Services/googleAuth.js");
 const {
@@ -96,9 +96,18 @@ router.get(
   viewFlightTicket
 );
 // router.post("/update", authenticate, updateUserProfile);
-router.stack.forEach((route) => {
-  if (route.route) {
-    console.log("route ", route.route.path);
-  }
-});
+function logRoutes(router) {
+  router.stack.forEach((layer) => {
+    if (layer.route) {
+      const methods = Object.keys(layer.route.methods).join(', ').toUpperCase();
+      logger.info(`Route registered: ${methods} ${layer.route.path}`);
+    } else if (layer.name === 'router') {
+      // Handle nested routers if any
+      logRoutes(layer.handle);
+    }
+  });
+}
+
+// Call it after all routes are defined
+logRoutes(router);
 module.exports = { router };
