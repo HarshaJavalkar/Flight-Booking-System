@@ -13,7 +13,6 @@ const decodeToken = (req, res, next) => {
       const decoded = jwt.verify(token, publicKey);
       req.user = decoded; // Attach user data to request
     } catch (err) {
-      console.log("Token decoding failed:", err.message);
       req.user = null; // Proceed without blocking
     }
   } else {

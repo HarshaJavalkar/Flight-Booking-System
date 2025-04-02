@@ -3,18 +3,26 @@ const router = express.Router();
 const asyncHandler = require("express-async-handler");
 const { authLimit, flightLimit } = require("./rate-limit");
 
-const { register, login } = require("./microservices/auth");
-const { loginWithGoogle, callBack } = require("./microservices/googleAuth.js");
+const { register, login } = require("./Services/auth");
+const { loginWithGoogle, callBack } = require("./Services/googleAuth.js");
 const {
   bookFlight,
-} = require("./microservices/flight-booking-system/book_flight_ticket.js");
+} = require("./Services/flight-booking-system/book_flight_ticket.js");
 const {
   viewFlightTicket,
-} = require("./microservices/flight-booking-system/view_flight_ticket.js");
-
+} = require("./Services/flight-booking-system/view_flight_ticket.js");
 const {
   createFlight,
-} = require("./microservices/flight-booking-system/create_a_flight.js");
+} = require("./Services/flight-booking-system/create_a_flight.js");
+const {
+  cancelFlightTicket,
+} = require("./Services/flight-booking-system/cancel_flight_ticket.js");
+const {
+  viewAllPassengers,
+} = require("./Services/flight-booking-system/view_all_passengers.js");
+const {
+  modifySeatAssignment,
+} = require("./Services/flight-booking-system/modify_seat_assignment.js");
 
 const {
   validateBookingRequest,
@@ -23,11 +31,7 @@ const {
   checkSeatAvailability,
 } = require("./middlewares/checkSeatAvailability.js");
 
-const {
-  authenticate,
-  adminMiddleware,
-  userMiddleware,
-} = require("./middlewares/authenticate.js");
+const { authenticate } = require("./middlewares/authenticate.js");
 
 router.post(
   "/register",
@@ -55,21 +59,42 @@ router.post(
 router.post(
   "/create-a-flight",
   flightLimit,
-  authenticate,
-  adminMiddleware,
+  asyncHandler((req, res, next) => authenticate(req, res, next, "admin")),
   createFlight
 );
 router.post(
   "/book-flight",
   flightLimit,
-  userMiddleware,
-  authenticate,
+  asyncHandler((req, res, next) => authenticate(req, res, next, "user")),
   validateBookingRequest,
   checkSeatAvailability,
   bookFlight
 );
+router.put(
+  "/cancel-flight-ticket",
+  flightLimit,
+  asyncHandler((req, res, next) => authenticate(req, res, next, "user")),
+  cancelFlightTicket
+);
+router.put(
+  "/modify-seat",
+  flightLimit,
+  asyncHandler((req, res, next) => authenticate(req, res, next, "user")),
+  modifySeatAssignment
+);
 
-router.get("/view-flight-ticket", flightLimit, authenticate, viewFlightTicket);
+router.post(
+  "/view-all-passengers",
+  flightLimit,
+  asyncHandler((req, res, next) => authenticate(req, res, next, "admin")),
+  viewAllPassengers
+);
+router.get(
+  "/view-flight-ticket",
+  flightLimit,
+  asyncHandler((req, res, next) => authenticate(req, res, next, "user")),
+  viewFlightTicket
+);
 // router.post("/update", authenticate, updateUserProfile);
 router.stack.forEach((route) => {
   if (route.route) {

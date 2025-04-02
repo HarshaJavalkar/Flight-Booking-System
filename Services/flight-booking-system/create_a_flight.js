@@ -7,7 +7,6 @@ const createFlight = asyncHandler(async (req, res) => {
     await flight.save();
     res.status(201).json({ message: "Flight schedule created", flight });
   } catch (error) {
-    console.log("java" + error.code);
     res.status(400).json({ error: error.message });
   }
 });
